@@ -4,6 +4,7 @@ import android.os.Handler;
 
 import com.test.mvp.GetDataUtil;
 import com.test.mvp.ReceiveAddressListActivity;
+import com.test.mvp.View.ReceiveAddressListView;
 import com.test.mvp.mode.AddressList;
 
 import java.util.ArrayList;
@@ -13,16 +14,18 @@ import java.util.ArrayList;
  */
 
 public class ReceiveAddressListPresenter implements BasePresenter{
+    private final ReceiveAddressListView listView;
     private Handler  handler=new Handler();
     //下拉刷新状态
     public final  int REFRESH_STATUS=1;
     public boolean  isLoad=false;
     //上拉加载更多状态
     public final  int LOADING_STATUS=2;
-    private final ReceiveAddressListActivity receiveAddressListActivity;
+
+
     private  ArrayList<AddressList>  addressLists=new ArrayList<>();
-    public ReceiveAddressListPresenter(ReceiveAddressListActivity receiveAddressListActivity) {
-        this.receiveAddressListActivity=receiveAddressListActivity;
+    public ReceiveAddressListPresenter(ReceiveAddressListView listView) {
+        this.listView=listView;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class ReceiveAddressListPresenter implements BasePresenter{
                     }else {//上拉加载
                         addressLists.addAll(lists);
                     }
-                    receiveAddressListActivity.setRectViewData(addressLists);
+                    listView.setRectViewData(addressLists);
                     isLoad=false;
                 }
             },1000);
